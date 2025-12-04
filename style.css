@@ -1,0 +1,365 @@
+/* ========================================================= */
+/* 1. VARIABLES & STYLES GENERAUX (Thème: Bleu Rétro Console + Noir & Blanc Classique)*/
+/* ========================================================= */
+
+:root {
+    /* Fond principal : Bleu foncé, profond, comme le fond d'un terminal CRT */
+    --bg-color: #1A1A3A; 
+    
+    --main-text-color: #F0F0F0; /* Texte principal en BLANC CASSÉ (lisible sur fond bleu foncé) */
+    --box-shadow-color: #000000; 
+    
+    --primary-highlight: #00BFFF; /* Bleu Azur Vif (pour les accents électriques) */
+    --secondary-highlight: #008DDA; /* Bleu plus foncé de soutien */
+    
+    /* Couleurs des boîtes (utilisent des tons de bleu pour l'effet "techno") */
+    --container-bg-dark: #2B2B5C; /* Bleu foncé pour le menu et les sous-boîtes (rétro) */
+    --container-bg-main: #3F3F7F; /* Bleu moyen pour les boîtes de contenu principales */
+    --menu-text-color: #F0F0F0; /* Texte du menu en blanc cassé */
+    --menu-width: 300px; 
+}
+
+/* Animations */
+@keyframes subtleGlow {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.02); }
+    100% { filter: brightness(1); }
+}
+
+@keyframes backgroundGradient {
+    /* Animation de dégradé subtile conservée */
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes titleEntrance {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* NOUVELLE ANIMATION STYLÉE : Effet de lueur Néon Terminal (bleu ciel) */
+@keyframes neonPulse {
+    0% {
+        /* Lueur forte + ombre noire */
+        text-shadow: 
+            0 0 10px var(--primary-highlight), 
+            0 0 15px var(--primary-highlight), 
+            4px 4px 0 var(--box-shadow-color);
+        opacity: 1;
+    }
+    100% {
+        /* Lueur plus faible (effet de respiration) + ombre noire */
+        text-shadow: 
+            0 0 5px var(--primary-highlight), 
+            0 0 10px rgba(0, 191, 255, 0.5), /* Une teinte moins opaque */
+            4px 4px 0 var(--box-shadow-color);
+        opacity: 0.9;
+    }
+}
+
+
+/* Flash rapide pour la transition entre les sections (trigger par JS) */
+@keyframes quickFlash {
+    0%, 100% { opacity: 1; filter: brightness(1); }
+    50% { opacity: 0.95; filter: brightness(1.2); transform: scale(1.005); }
+}
+
+/* Corps et mise en page principale */
+body {
+    /* Dégradé de fond animé conservé, utilisant les nouvelles couleurs bleues */
+    background-image: linear-gradient(270deg, var(--bg-color), #202050, var(--bg-color));
+    background-size: 400% 400%;
+    animation: subtleGlow 15s infinite alternate, backgroundGradient 30s ease infinite; 
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+    color: var(--main-text-color);
+    font-size: 11px;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* EFFET CRT : Ombre floue sur le texte pour la lueur rétro */
+p, li, .side-menu a, .footer-style {
+    /* Lueur subtile pour l'effet écran CRT/Terminal */
+    text-shadow: 0 0 3px rgba(0, 191, 255, 0.3); 
+    color: var(--main-text-color); 
+}
+
+/* Applique le flash lors de la transition JS */
+.portfolio-container.is-flashing {
+    animation: quickFlash 0.1s ease-out;
+}
+
+/* Titres H1, H2, H3 (les grands titres de section) */
+h1, h2, h3 {
+    font-family: 'Press Start 2P', cursive;
+    margin-top: 0;
+    margin-bottom: 30px; 
+    line-height: 1.2;
+    text-shadow: 2px 2px var(--box-shadow-color);
+    color: var(--main-text-color); /* Couleur du texte en blanc/blanc cassé (Noir & Blanc) */
+    /* Lueur plus forte pour les titres (pour qu'ils ressortent) - UNIFORMISEE */
+    text-shadow: 0 0 8px var(--primary-highlight), 4px 4px var(--box-shadow-color); /* 4px 4px pour plus d'impact */
+    /* Augmentation de la taille des titres de section */
+    font-size: 28px; /* Augmenté de 20px à 28px pour H2 et H3 */
+}
+h1 {
+    font-size: 36px; /* Augmenté de 32px à 36px pour le titre principal */
+}
+
+/* ========================================================= */
+/* 2. BARRE DE NAVIGATION LATERALE (Side Menu)               */
+/* ========================================================= */
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--menu-width); 
+    background-color: var(--container-bg-dark); /* Fond bleu foncé/gris foncé */
+    padding: 30px 15px; 
+    border-right: 4px solid var(--primary-highlight);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.8); /* Ombre sombre */
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+/* Style de l'étudiant (Zidi Khalil | BTS SIO (SISR)) - Remplacé par PORTFOLIO stylisé */
+.side-menu h3 {
+    color: var(--main-text-color); /* Retour au blanc/blanc cassé */
+    padding: 10px 5px; 
+    margin-bottom: 50px; /* Plus d'espace sous le titre */
+    text-align: center;
+    font-size: 30px; /* Taille encore augmentée pour "PORTFOLIO" */
+    line-height: 1.1;
+    
+    /* Reprise du text-shadow des H1/H2/H3 pour la lueur de base */
+    text-shadow: 0 0 8px var(--primary-highlight), 4px 4px var(--box-shadow-color);
+        
+    animation: neonPulse 1.5s infinite alternate; /* Pulsation continue */
+    position: relative; 
+    overflow: hidden; 
+}
+
+.side-menu a {
+    display: block;
+    padding: 15px 20px; 
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: var(--menu-text-color); /* Liens de menu en blanc cassé */
+    background-color: transparent;
+    border: 2px solid transparent;
+    transition: all 0.15s; 
+    font-size: 18px; /* Taille augmentée à 18px pour les chapitres */
+}
+
+.side-menu a:hover, .side-menu a.active {
+    background-color: var(--primary-highlight);
+    color: var(--box-shadow-color); /* Texte en noir sur fond bleu vif (fort contraste) */
+    border: 3px solid white;
+    box-shadow: 6px 6px var(--box-shadow-color); 
+}
+
+/* ========================================================= */
+/* 3. CONTENU PRINCIPAL & STRUCTURE                          */
+/* ========================================================= */
+
+.main-content {
+    margin-left: var(--menu-width); 
+    width: calc(100% - var(--menu-width));
+    padding: 50px; 
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+.portfolio-container {
+    max-width: 1300px; 
+    margin: 0 auto;
+    position: relative; 
+    transition: transform 0.1s ease-out; 
+}
+
+.title-block {
+    padding: 70px 50px; 
+    margin-bottom: 80px; 
+    background-color: var(--container-bg-dark); /* Titre sur fond bleu foncé */
+}
+
+/* Style spécifique pour le titre principal (H1) dans le bloc de titre */
+.title-block h1 {
+    font-size: 36px; /* Mis à jour */
+    color: var(--main-text-color); 
+    text-shadow: 0 0 8px var(--primary-highlight), 4px 4px var(--box-shadow-color); 
+}
+
+/* Conteneurs de contenu personnalisés */
+.nes-container.is-portfolio-box {
+    background-color: var(--container-bg-main); /* Conteneurs de contenu en bleu moyen */
+    border-image: linear-gradient(180deg, var(--secondary-highlight) 0%, var(--primary-highlight) 100%) 1; 
+    border-width: 4px;
+    padding: 50px; 
+    margin-bottom: 60px;
+    color: var(--main-text-color); /* Texte en blanc cassé */
+}
+
+.nes-container.is-portfolio-box.is-dark-bg {
+    background-color: var(--container-bg-dark); /* Première boîte d'accueil sur fond bleu foncé */
+}
+
+.nes-container.is-portfolio-box .title {
+    color: var(--primary-highlight); /* Titre de boîte en bleu vif */
+    background-color: var(--container-bg-main);
+    font-size: 16px; 
+    animation: titleEntrance 1s ease-out forwards;
+    animation-delay: 0.2s; 
+    opacity: 0;
+}
+
+.nes-container.is-dark {
+    background-color: var(--container-bg-dark);
+    padding: 30px;
+}
+
+/* Style pour le bouton du Tableau de Synthèse */
+.synthesis-button-container {
+    text-align: center;
+    margin: 40px 0;
+    padding: 20px;
+    background-color: var(--container-bg-dark);
+    border: 3px solid var(--primary-highlight);
+    box-shadow: 6px 6px var(--box-shadow-color);
+}
+.synthesis-button-container p {
+    font-size: 10px;
+    margin-bottom: 15px;
+    color: #FFD700; /* Jaune or pour l'alerte */
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+/* Grille pour les compétences */
+.grid-3-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 40px; 
+    margin-top: 30px;
+}
+
+/* Styles pour les éléments DETAILS (Accordéon) pour organiser le contenu */
+details {
+    margin-bottom: 20px;
+}
+details summary {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 2px solid var(--secondary-highlight);
+    color: var(--primary-highlight);
+    list-style: none;
+}
+details summary::before {
+    content: "+";
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 10px;
+    transition: transform 0.3s;
+    color: var(--main-text-color); /* Signe en blanc cassé */
+}
+details[open] summary::before {
+    content: "-";
+    transform: rotate(90deg);
+}
+details p {
+    padding: 15px;
+    background-color: #30306A; /* Fond légèrement différent pour le contenu */
+    margin-top: 10px;
+    border-left: 3px solid var(--primary-highlight);
+    font-size: 10px;
+    text-shadow: none; 
+    color: var(--main-text-color); /* Texte en blanc cassé */
+}
+
+/* Styles pour les boutons NES.css - ajustés pour le thème */
+.nes-btn.is-primary {
+    background-color: var(--primary-highlight);
+    color: var(--box-shadow-color); /* Texte en noir sur fond bleu vif */
+    border-color: var(--secondary-highlight);
+    text-decoration: none; /* Assurez-vous que les liens n'ont pas de soulignement */
+}
+.nes-btn.is-success {
+    background-color: #2ED573; /* Vert standard pour Succès */
+    color: var(--box-shadow-color); 
+    border-color: #17C65A;
+}
+
+
+/* --- LOGIQUE DES ONGLETS AVEC SLIDE EFFECT CLEAN --- */
+/* Ces règles CSS gèrent la transition entre les sections */
+
+.portfolio-container > section {
+    display: none; 
+    opacity: 0;
+    transform: translateY(80px); 
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out; 
+    margin-bottom: 80px; 
+    min-height: 70vh; 
+}
+
+.portfolio-container > section.active {
+    display: block; 
+    opacity: 1;
+    transform: translateY(0); 
+}
+
+/* ========================================================= */
+/* 4. FOOTER                                                 */
+/* ========================================================= */
+
+.footer-style {
+    padding: 20px 0;
+    margin-top: 50px;
+    text-align: center;
+    border-top: 2px dashed var(--secondary-highlight);
+    font-size: 9px;
+    color: var(--main-text-color);
+}
+
+
+/* ========================================================= */
+/* 5. ADAPTATION MOBILE                                      */
+/* ========================================================= */
+
+@media (max-width: 950px) { 
+    body {
+        display: block;
+    }
+    .side-menu {
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 15px;
+        border-right: none;
+        border-bottom: 4px solid var(--primary-highlight);
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+    
+    .side-menu a {
+        width: 90%; 
+        margin: 5px auto;
+        text-align: left;
+    }
+    .title-block h1 {
+        font-size: 20px;
+        padding: 0;
+        text-shadow: 0 0 8px var(--primary-highlight), 4px 4px var(--box-shadow-color);
+    }
+    .nes-container.is-portfolio-box {
+        padding: 20px;
+    }
+}

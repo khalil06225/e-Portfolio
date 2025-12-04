@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTS SIO - Portfolio Numérique</title>
+    <!-- NES.css Framework - Version 2.3.0 -->
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <!-- Google Font: Press Start 2P (Style Rétro Pixel) -->
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <!-- Lien vers le fichier de style externe -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. Menu Latéral -->
+    <nav class="side-menu">
+        <h3>PORTFOLIO SIO</h3>
+        <a href="#accueil" class="menu-item active" data-section="accueil">🗂️ ACCUEIL & PROFIL</a>
+        <a href="#competences" class="menu-item" data-section="competences">💻 COMPÉTENCES</a>
+        <a href="#projets" class="menu-item" data-section="projets">⚙️ PROJETS</a>
+        <a href="#veille" class="menu-item" data-section="veille">💡 VEILLE TECHNOLOGIQUE</a>
+    </nav>
+
+    <!-- 2. Contenu Principal -->
+    <div class="main-content">
+        <div class="portfolio-container">
+
+            <!-- 2.1. Bloc Titre -->
+            <div class="title-block nes-container is-dark">
+                <h1>Zidi Khalil | BTS SIO (SISR)</h1>
+                <p>Développeur junior orienté Systèmes et Réseaux</p>
+            </div>
+
+            <!-- 2.2. Section Accueil -->
+            <section id="accueil" class="active">
+                <h2>Profil</h2>
+                
+                <div class="nes-container is-portfolio-box is-dark-bg">
+                    <p class="title">Ma Présentation</p>
+                    <p>Bienvenue sur mon portfolio numérique ! Cet espace a été conçu pour présenter mes acquis et projets réalisés dans le cadre de ma formation en BTS Services Informatiques aux Organisations, option Solutions d'Infrastructure, Systèmes et Réseaux (SISR).</p>
+                    <p>Vous trouverez ici un aperçu de mes compétences en développement, administration système et réseau, ainsi que mes travaux pratiques.</p>
+                </div>
+
+                <div class="nes-container is-portfolio-box">
+                    <p class="title">Mon Objectif</p>
+                    <p>Acquérir une double compétence en développement d'applications et en gestion d'infrastructure pour devenir un technicien polyvalent et innovant.</p>
+                </div>
+            </section>
+
+            <!-- 2.3. Section Compétences (AVEC BOUTON DE LIEN EXTERNE) -->
+            <section id="competences">
+                <h2>Compétences et Expertise</h2>
+                
+                <!-- BLOC : Tableau de Synthèse (Lien Externe) -->
+                <div class="synthesis-button-container">
+                    <p>Le Tableau de Synthèse est un document externe (PDF) récapitulant l'ensemble de mes situations professionnelles.</p>
+                    
+                    <!-- L'utilisateur DOIT s'assurer que le fichier tableau_de_synthese.pdf est au même niveau que index.html -->
+                    <a 
+                        href="tableau_de_synthese.pdf" 
+                        target="_blank" 
+                        class="nes-btn is-primary" 
+                        style="text-decoration: none;"
+                    >
+                        💾 Ouvrir le Tableau de Synthèse (PDF)
+                    </a>
+                </div>
+                
+                <!-- Compétences Détaillées (Accordéons) -->
+                <div class="nes-container is-portfolio-box">
+                    <p class="title">Détail des Compétences Générales</p>
+                    
+                    <details>
+                        <summary>💻 Développement & Logique</summary>
+                        <ul>
+                            <li>Bases solides en HTML / CSS</li>
+                            <li>Débutant en JavaScript</li>
+                            <li>Notions en Python (ou autre langage)</li>
+                            <li>Compréhension des structures de données (tableaux, listes…)</li>
+                            <li>Capacité à lire et comprendre des algorithmes simples</li>
+                        </ul>
+                    </details>
+                    
+                    <details>
+                        <summary>🛠️ Outils & Environnements de Travail</summary>
+                        <ul>
+                            <li>Utilisation de VS Code</li>
+                            <li>Utilisation de GitHub (niveau débutant)</li>
+                            <li>Manipulation d’un environnement Windows / Linux</li>
+                            <li>Installation et configuration de logiciels</li>
+                        </ul>
+                    </details>
+
+                    <details>
+                        <summary>🗄️ Bases de Données (SQL)</summary>
+                        <ul>
+                            <li>Notions en SQL (SELECT, INSERT, UPDATE, DELETE)</li>
+                            <li>Création de tables simples</li>
+                        </ul>
+                    </details>
+                    
+                    <details>
+                        <summary>🖥️ Matériel & Infrastructure</summary>
+                        <ul>
+                            <li>Assemblage, maintenance et diagnostic de PC (Hardware)</li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- 2.4. Section Projets (Contenu par défaut) -->
+            <section id="projets">
+                <h2>Projets Réalisés</h2>
+                <div class="grid-3-cols">
+                    
+                    <div class="nes-container is-dark">
+                        <p class="title">Projet 1: Serveur Web</p>
+                        <p>Installation et configuration d'un serveur web (Apache/Nginx) sur une machine virtuelle Linux (Debian/Ubuntu).</p>
+                        <a href="#" class="nes-btn is-success">Détails</a>
+                    </div>
+                    
+                    <div class="nes-container is-dark">
+                        <p class="title">Projet 2: Application de Gestion</p>
+                        <p>Création d'une petite application CRUD (Create, Read, Update, Delete) en Python/Flask avec une base de données MySQL.</p>
+                        <a href="#" class="nes-btn is-success">Détails</a>
+                    </div>
+                    
+                    <div class="nes-container is-dark">
+                        <p class="title">Projet 3: Réseau Local</p>
+                        <p>Mise en place et sécurisation d'un réseau local pour une PME (configuration switch, routage, pare-feu).</p>
+                        <a href="#" class="nes-btn is-success">Détails</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2.5. Section Veille Technologique (Contenu par défaut) -->
+            <section id="veille">
+                <h2>Veille Technologique</h2>
+                <div class="nes-container is-portfolio-box">
+                    <p class="title">Sujet Actuel : La Conteneurisation (Docker & Kubernetes)</p>
+                    <p>La conteneurisation est la méthode de virtualisation la plus populaire, permettant d'isoler des applications avec leurs dépendances pour garantir leur portabilité. J'étudie actuellement l'impact de Docker et Kubernetes dans les architectures microservices modernes.</p>
+                    <button type="button" class="nes-btn is-primary">Voir les Sources</button>
+                </div>
+            </section>
+
+            <!-- 3. Footer -->
+            <footer class="footer-style">
+                <p>&copy; 2024 Portfolio BTS SIO. Conçu avec NES.css.</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- 4. Lien vers le fichier JavaScript externe -->
+    <script src="script.js" defer></script>
+</body>
+</html>
