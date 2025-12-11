@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTS SIO - Portfolio Numérique Rétro</title>
+    <!-- NES.css Framework - Version 2.3.0 -->
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <!-- Google Font: Press Start 2P (Style Rétro Pixel) -->
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    
+    <style>
+        /* ========================================================= */
+        /* 1. VARIABLES & STYLES GENERAUX (Thème: Bleu Rétro Console + Noir & Blanc Classique)*/
+        /* ========================================================= */
+
+        :root {
+            /* Fond principal : Bleu foncé, profond, comme le fond d'un terminal CRT */
+            --bg-color: #1A1A3A; 
+            
+            --main-text-color: #F0F0F0; /* Texte principal en BLANC CASSÉ (lisible sur fond bleu foncé) */
+            --box-shadow-color: #000000; 
+            
+            --primary-highlight: #00BFFF; /* Bleu Azur Vif (pour les accents électriques) */
+            --secondary-highlight: #008DDA; /* Bleu plus foncé de soutien */
+            
+            /* Couleurs des boîtes (utilisent des tons de bleu pour l'effet "techno") */
+            --container-bg-dark: #2B2B5C; /* Bleu foncé pour le menu et les sous-boîtes (rétro) */
+            --container-bg-main: #3F3F7F; /* Bleu moyen pour les boîtes de contenu principales */
+            --menu-text-color: #F0F0F0; /* Texte du menu en blanc cassé */
+            --menu-width: 300px; 
+        }
+
+        /* Animations */
+        @keyframes subtleGlow {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(1.02); }
+            100% { filter: brightness(1); }
+        }
+
+        @keyframes backgroundGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes titleEntrance {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Effet de lueur Néon Terminal (bleu ciel) */
+        @keyframes neonPulse {
+            0% {
+                text-shadow: 
+                    0 0 10px var(--primary-highlight), 
+                    0 0 15px var(--primary-highlight), 
+                    4px 4px 0 var(--box-shadow-color);
+                opacity: 1;
+            }
+            100% {
+                text-shadow: 
+                    0 0 5px var(--primary-highlight), 
+                    0 0 10px rgba(0, 191, 255, 0.5), 
+                    4px 4px 0 var(--box-shadow-color);
+                opacity: 0.9;
+            }
+        }
+
+        /* Flash rapide pour la transition (géré par JS) */
+        @keyframes quickFlash {
+            0%, 100% { opacity: 1; filter: brightness(1); }
+            50% { opacity: 0.95; filter: brightness(1.2); transform: scale(1.005); }
+        }
+
+        /* Corps et mise en page principale */
+        body {
+            /* Dégradé de fond animé */
+            background-image: linear-gradient(270deg, var(--bg-color), #202050, var(--bg-color));
+            background-size: 400% 400%;
+            animation: subtleGlow 15s infinite alternate, backgroundGradient 30s ease infinite; 
+            font-family: 'Press Start 2P', cursive;
+            margin: 0;
+            padding: 0;
+            color: var(--main-text-color);
+            font-size: 11px;
+            display: flex; /* Layout principal pour Desktop */
+            min-height: 100vh;
+        }
+
+        /* EFFET CRT : Ombre floue sur le texte pour la lueur rétro */
+        p, li, .side-menu .menu-item, .footer-style, details ul {
+            text-shadow: 0 0 3px rgba(0, 191, 255, 0.3); 
+            color: var(--main-text-color); 
+        }
+
+        /* Applique le flash lors de la transition JS */
+        .portfolio-container.is-flashing {
+            animation: quickFlash 0.1s ease-out;
+        }
+
+        /* Titres H1, H2, H3 */
+        h1, h2, h3 {
+            font-family: 'Press Start 2P', cursive;
+            margin-top: 0;
+            margin-bottom: 30px; 
+            line-height: 1.2;
+            text-shadow: 0 0 8px var(--primary-highlight), 4px 4px var(--box-shadow-color);
+            color: var(--main-text-color); 
+            font-size: 28px; 
+        }
+        h1 {
+            font-size: 36px; 
+        }
+
+        /* ========================================================= */
+        /* 2. BARRE DE NAVIGATION LATERALE (Side Menu)               */
+        /* ========================================================= */
+
+        /* Layout Desktop (min-width: 901px) */
+        @media (min-width: 901px) {
+            .side-menu {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: var(--menu-width); /* 300px */
+                padding: 30px 15px; 
+                overflow-y: auto;
+                z-index: 1000;
+                
+                background-color: var(--container-bg-dark); 
+                border-right: 4px solid var(--primary-highlight);
+                box-shadow: 4px 0 15px rgba(0, 0, 0, 0.8); 
+            }
+            .main-content {
+                margin-left: var(--menu-width); /* 300px */
+                width: calc(100% - var(--menu-width));
+            }
+        }
+
+
+        .side-menu h3 {
+            color: var(--main-text-color); 
+            padding: 10px 5px; 
+            margin-bottom: 50px; 
+            text-align: center;
+            font-size: 30px; 
+            line-height: 1.1;
+            text-shadow: 0 0 8px var(--primary-highlight), 4px 4px var(--box-shadow-color);
+            animation: neonPulse 1.5s infinite alternate; 
+            position: relative; 
+            overflow: hidden; 
+        }
+
+        .side-menu .menu-item {
+            display: block;
+            padding: 15px 20px; 
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: var(--menu-text-color); 
+            background-color: transparent;
+            border: 2px solid transparent;
+            transition: all 0.15s; 
+            font-size: 18px; 
+        }
+
+        .side-menu .menu-item:hover, .side-menu .menu-item.active {
+            background-color: var(--primary-highlight);
+            color: var(--box-shadow-color); /* Texte en noir sur fond bleu vif (fort contraste) */
+            border: 3px solid white;
+            box-shadow: 6px 6px var(--box-shadow-color);
+            padding-left: 20px;
+        }
+
+        /* ========================================================= */
+        /* 3. CONTENU PRINCIPAL & STRUCTURE                          */
+        /* ========================================================= */
+        
+        .main-content {
+            padding: 50px; 
+            box-sizing: border-box;
+            flex-grow: 1;
+        }
+
+        .portfolio-container {
+            max-width: 1300px; 
+            margin: 0 auto;
+            position: relative; 
+        }
+
+        .title-block {
+            padding: 70px 50px; 
+            margin-bottom: 80px; 
+            background-color: var(--container-bg-dark); /* Titre sur fond bleu foncé */
+        }
+
+        .title-block h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem); /* Responsive font size conservée */
+            color: var(--main-text-color); 
+            text-shadow: 0 0 8px var(--primary-highlight), 4px 4px var(--box-shadow-color); 
+            margin-bottom: 5px;
+        }
+        .title-block p {
+            font-size: 12px;
+        }
+
+        /* Conteneurs de contenu personnalisés */
+        .nes-container.is-portfolio-box {
+            background-color: var(--container-bg-main); /* Conteneurs de contenu en bleu moyen */
+            border-image: linear-gradient(180deg, var(--secondary-highlight) 0%, var(--primary-highlight) 100%) 1; 
+            border-width: 4px;
+            padding: 50px; 
+            margin-bottom: 60px;
+            color: var(--main-text-color); /* Texte en blanc cassé */
+        }
+
+        .nes-container.is-portfolio-box.is-dark-bg {
+            background-color: var(--container-bg-dark); 
+        }
+
+        .nes-container.is-portfolio-box .title {
+            color: var(--primary-highlight); /* Titre de boîte en bleu vif */
+            background-color: var(--container-bg-main);
+            font-size: 16px; 
+            animation: titleEntrance 1s ease-out forwards;
+            animation-delay: 0.2s; 
+            opacity: 0;
+        }
+
+        .nes-container.is-dark {
+            background-color: var(--container-bg-dark);
+            padding: 30px;
+        }
+
+        /* Style pour le bouton du Tableau de Synthèse */
+        .synthesis-button-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+            background-color: var(--container-bg-dark);
+            border: 3px solid var(--primary-highlight);
+            box-shadow: 6px 6px var(--box-shadow-color);
+        }
+        .synthesis-button-container p {
+            font-size: 10px;
+            margin-bottom: 15px;
+            color: #FFD700; /* Jaune or pour l'alerte */
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Grille pour les projets/compétences */
+        .grid-3-cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adapté pour 3 colonnes flexibles */
+            gap: 40px; 
+            margin-top: 30px;
+        }
+        
+        /* Centrage des éléments de la grille des certifications/projets */
+        .project-item {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* Style des Icônes de Certification (NES.css) */
+        .certif-icon-container {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-in;
+            margin-bottom: 10px;
+            border: 3px solid var(--primary-highlight);
+            transition: transform 0.15s, box-shadow 0.15s;
+            background-color: #151540; /* Petit fond sombre pour l'icône */
+        }
+
+        .certif-icon-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--primary-highlight);
+        }
+
+        /* Style spécifique pour les icônes */
+        .certif-icon-container i {
+            font-size: 6rem; /* Grande taille pour l'icône */
+            color: #FFFFFF; /* Blanc pur pour un effet pixel */
+            text-shadow: 4px 4px #000000;
+        }
+
+
+        /* Styles pour les éléments DETAILS (Accordéon) */
+        details {
+            margin-bottom: 20px;
+        }
+        details summary {
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 2px solid var(--secondary-highlight);
+            color: var(--primary-highlight);
+            list-style: none;
+            font-size: 14px; /* Taille ajustée pour le contenu */
+        }
+        details summary::before {
+            content: "+";
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 10px;
+            transition: transform 0.3s;
+            color: var(--main-text-color); 
+        }
+        details[open] summary::before {
+            content: "-";
+            transform: rotate(90deg);
+        }
+        details p, details ul, details li {
+            padding: 0;
+            background-color: #30306A; /* Fond légèrement différent pour le contenu */
+            margin-top: 10px;
+            border-left: 3px solid var(--primary-highlight);
+            font-size: 10px;
+            text-shadow: none; 
+            color: var(--main-text-color); 
+        }
+        details ul {
+             padding-left: 20px;
+        }
+        
+        /* Style spécifique pour la liste du Parcours Académique (avec correction d'espacement) */
+        #accueil .nes-list.is-circle li {
+             margin-bottom: 15px; /* Ajoute de l'espace sous chaque ligne */
+        }
+        
+        /* Ajout d'une classe d'utilité pour les marges */
+        .mt-2 {
+            margin-top: 1.5rem; /* 24px */
+        }
+
+
+        /* Styles pour les boutons NES.css - ajustés pour le thème */
+        .nes-btn.is-primary {
+            background-color: var(--primary-highlight);
+            color: var(--box-shadow-color); 
+            border-color: var(--secondary-highlight);
+        }
+        .nes-btn.is-success {
+            background-color: #2ED573; 
+            color: var(--box-shadow-color); 
+            border-color: #17C65A;
+        }
+        .nes-btn.is-warning {
+            background-color: #FFC043; 
+            color: var(--box-shadow-color);
+            border-color: #FFA500;
+        }
+        
+        /* Tables */
+        .nes-table.is-dark th {
+            background-color: var(--container-bg-dark) !important;
+            color: var(--main-text-color);
+        }
+        .nes-table.is-dark td {
+            color: var(--main-text-color);
+            font-size: 0.75rem;
+        }
+
+        /* --- LOGIQUE DES ONGLETS AVEC SLIDE EFFECT CLEAN --- */
+
+        .portfolio-container > section {
+            display: none; 
+            opacity: 0;
+            transform: translateY(80px); 
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out; 
+            margin-bottom: 80px; 
+            min-height: 70vh; 
+        }
+
+        .portfolio-container > section.active {
+            display: block; 
+            opacity: 1;
+            transform: translateY(0); 
+        }
+
+        /* ========================================================= */
+        /* 4. FOOTER                                                 */
+        /* ========================================================= */
+
+        .footer-style {
+            padding: 20px 0;
+            margin-top: 50px;
+            text-align: center;
+            border-top: 2px dashed var(--secondary-highlight);
+            font-size: 9px;
+            color: var(--main-text-color);
+        }
+        
+        /* ========================================================= */
+        /* 5. MODAL / LIGHTBOX POUR CERTIFICATS (NOUVEAU)            */
+        /* ========================================================= */
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9); /* Fond très sombre */
+            display: none; /* Caché par défaut */
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* Assure que la modale est au-dessus de tout */
+            backdrop-filter: blur(5px);
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background-color: var(--container-bg-dark); 
+            width: 90%;
+            height: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 0 50px var(--primary-highlight); 
+            overflow: hidden; /* Empêche le contenu de déborder */
+        }
+        .modal-content .title {
+            color: var(--primary-highlight);
+            margin-bottom: 15px;
+            background-color: var(--container-bg-dark);
+            font-size: 14px;
+            padding: 0 10px 10px 10px;
+            text-shadow: none;
+            box-shadow: none;
+        }
+        #certifIframe {
+            width: 100%;
+            /* Ajuste la hauteur en fonction de l'espace titre/bouton */
+            height: calc(100% - 70px); 
+            border: 3px solid var(--secondary-highlight);
+            background-color: white; /* Fond blanc pour le PDF */
+            display: block;
+        }
+        .close-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            z-index: 2001;
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+
+
+        /* ========================================================= */
+        /* 6. ADAPTATION MOBILE (max-width: 900px)                            */
+        /* ========================================================= */
+
+        @media (max-width: 900px) { 
+            body {
+                display: block;
+            }
+            .side-menu {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 15px;
+                border-right: none;
+                border-bottom: 4px solid var(--primary-highlight);
+                box-shadow: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+            
+            /* Adapt menu items for mobile display */
+            .side-menu .menu-item {
+                width: 90%; 
+                margin: 5px auto;
+                text-align: left;
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .side-menu .menu-item:hover, .side-menu .menu-item.active {
+                 box-shadow: none;
+                 border: 2px solid white; 
+                 padding-left: 15px;
+            }
+
+            .title-block h1 {
+                font-size: 20px;
+                padding: 0;
+                text-shadow: 0 0 8px var(--primary-highlight), 4px 4px var(--box-shadow-color);
+            }
+            .nes-container.is-portfolio-box {
+                padding: 20px;
+            }
+            
+            .side-menu h3 {
+                 margin-bottom: 20px;
+                 font-size: 24px;
+            }
+            
+            .synthesis-button-container {
+                 padding: 15px;
+            }
+            
+            .certif-icon-container {
+                width: 100px;
+                height: 100px;
+            }
+            .certif-icon-container i {
+                font-size: 4rem; /* Taille plus petite sur mobile */
+            }
+            .project-item p {
+                font-size: 8px !important;
+            }
+
+            /* Modal mobile */
+            .modal-content {
+                width: 95%;
+                height: 95%;
+                padding: 10px;
+            }
+            .close-btn {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Menu Latéral -->
+    <nav class="side-menu">
+        <h3>PORTFOLIO SIO</h3>
+        <a href="#accueil" class="menu-item active" data-section="accueil">🗂️ ACCUEIL & PROFIL</a>
+        <a href="#competences" class="menu-item" data-section="competences">💻 COMPÉTENCES</a>
+        <a href="#projets" class="menu-item" data-section="projets">⚙️ PROJETS RÉALISÉS</a>
+        <a href="#certif" class="menu-item" data-section="certif">🏆 CERTIFICATIONS</a>
+        <a href="#veille" class="menu-item" data-section="veille">💡 VEILLE TECHNOLOGIQUE</a>
+    </nav>
+
+    <!-- 2. Contenu Principal -->
+    <div class="main-content">
+        <div class="portfolio-container">
+
+            <!-- 2.1. Bloc Titre -->
+            <div class="title-block nes-container is-dark">
+                <h1>Zidi Khalil | BTS SIO (SISR)</h1>
+                <p>Développeur junior orienté Systèmes et Réseaux</p>
+            </div>
+
+            <!-- 2.2. Section Accueil -->
+            <section id="accueil" class="active">
+                <h2>Profil & Objectifs</h2>
+                
+                <div class="nes-container is-portfolio-box is-dark-bg">
+                    <p class="title">Présentation</p>
+                    
+                    <p>Je m’appelle Khalil Zidi et je suis actuellement en BTS SIO, option SISR. Depuis longtemps, je suis passionné par l’informatique : que ce soit le hardware, les réseaux, la programmation ou simplement comprendre comment tout fonctionne.</p>
+                    
+                    <p class="mt-2">J’aime apprendre par moi-même, expérimenter et chercher des solutions. L’informatique n’est pas juste un domaine d’étude pour moi, c’est vraiment quelque chose qui me motive au quotidien.</p>
+                    
+                    <p class="mt-2">Je suis curieux, investi, et j’essaie toujours de développer mes compétences pour progresser et construire un parcours professionnel qui me ressemble.</p>
+                </div>
+                
+                <!-- BLOC : Parcours Scolaire Factuel -->
+                <div class="nes-container is-portfolio-box">
+                    <p class="title">Parcours Académique</p>
+                    
+                    <!-- L'ajout de CSS (margin-bottom: 15px) gère l'espacement -->
+                    <ul class="nes-list is-circle">
+                        <li>BTS SIO - SISR (Actuel) : Solutions d'Infrastructure, Systèmes et Réseaux.</li>
+                        <li>Transition CIEL : Anciennement Cybersécurité, Informatique et réseaux, Électronique.</li>
+                        <li>Baccalauréat SN : Système Numérique.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 2.3. Section Compétences (Conservé tel quel) -->
+            <section id="competences">
+                <h2>Compétences et Expertise</h2>
+                
+                <!-- BLOC : Tableau de Synthèse (Lien Externe) -->
+                <div class="synthesis-button-container">
+                    <p>Mon Tableau de Synthèse est la preuve formelle de mon travail. Téléchargez le PDF pour les détails complets.</p>
+                    
+                    <a 
+                        href="tableau_de_synthese.pdf" 
+                        target="_blank" 
+                        class="nes-btn is-primary" 
+                        style="text-decoration: none;"
+                    >
+                        💾 Ouvrir le Tableau de Synthèse (PDF)
+                    </a>
+                </div>
+                
+                <!-- Compétences Détaillées (Accordéons) -->
+                <div class="nes-container is-portfolio-box">
+                    <p class="title">Détail des Compétences Générales : Mes Niveaux Actuels</p>
+                    
+                    <details>
+                        <summary>💻 Développement & Scripting (Niveau Junior/Progression)</summary>
+                        <p>Je suis efficace pour créer des interfaces simples et développer des outils d'administration. Je suis en pleine montée en compétence sur les frameworks et l'optimisation du code.</p>
+                        <ul>
+                            <li>Bases solides en HTML / CSS (pour le front des applications d'administration).</li>
+                            <li>Débutant en JavaScript (la logique côté client).</li>
+                            <li>Notions en Python / Bash (essentiel pour l'automatisation en tant qu'admin).</li>
+                            <li>Capacité à lire des algorithmes complexes, même si l'écriture complète prend encore du temps.</li>
+                        </ul>
+                    </details>
+                    
+                    <details>
+                        <summary>🛠️ Infrastructure, Système & Réseau (Mon Core SISR)</summary>
+                        <p>C'est là que je me sens le plus à l'aise. Installer, configurer, sécuriser : c'est mon terrain de jeu.</p>
+                        <ul>
+                            <li>Administration OS : Maîtrise des environnements Windows Server et Linux (commandes de base, gestion des utilisateurs).</li>
+                            <li>Réseau : Compréhension des modèles OSI/TCP, sous-réseautage, et configuration de base sur Cisco Packet Tracer.</li>
+                            <li>Virtualisation : Utilisation d'outils (comme VirtualBox ou Proxmox) pour simuler des réseaux d'entreprise.</li>
+                            <li>Sécurité : Mise en place de règles de firewall simples (ACL), gestion des droits d'accès.</li>
+                        </ul>
+                    </details>
+
+                    <details>
+                        <summary>🗄️ Bases de Données (SQL) & Gestion de Projet</summary>
+                        <p>J'utilise le SQL comme un outil. Je suis capable d'interagir avec les bases de données pour extraire et modifier des informations, ce qui est crucial pour le debugging des applications et l'administration.</p>
+                        <ul>
+                            <li>Requêtes SQL de base (CRUD : Create, Read, Update, Delete).</li>
+                            <li>Notions de modélisation simple (MCD/MLD).</li>
+                            <li>Utilisation de Git et GitHub pour le versioning de mes projets.</li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- 2.4. Section Projets (Conservé tel quel) -->
+            <section id="projets">
+                <h2>Projets Réalisés</h2>
+                
+                <!-- Projet Billy's 140 Rétabli -->
+                <div class="nes-container is-portfolio-box is-dark-bg">
+                    <p class="title">Projet de Développement: Site Billy's 140</p>
+                    <p>
+                        Ma première mission concrète de création de vitrine en ligne. C'est un projet complet qui m'a forcé à gérer le design, le responsive et la cohérence de l'interface.
+                    </p>
+                    <p class="mt-2">
+                        Leçon Apprise : L'importance de l'architecture CSS pour un site maintenable.<br>
+                        Technologies : HTML, CSS, JavaScript (Code de base).
+                    </p>
+                    
+                    <a 
+                        href="https://khalil06225.github.io/billys140site.github.io/" 
+                        target="_blank" 
+                        class="nes-btn is-warning"
+                        style="text-decoration: none; margin-top: 20px;"
+                    >
+                        🔗 Consulter le Site Billy's 140 (Live)
+                    </a>
+                </div>
+                
+                <!-- Espace pour d'autres projets -->
+                <div class="nes-container is-portfolio-box">
+                    <p class="title">Projet Futur (Objectif SIO)</p>
+                    <p>Actuellement en préparation : la mise en place complète d'une infrastructure réseau et serveur (AD, DNS, DHCP) sous environnement virtualisé. Le but est de prouver ma maîtrise des bases de l'administration système. À suivre !</p>
+                </div>
+            </section>
+            
+            <!-- 2.5. Section Certifications (Conservé tel quel) -->
+            <section id="certif">
+                <h2>Certifications Officielles Obtenues</h2>
+                
+                <div class="nes-container is-portfolio-box is-dark-bg">
+                    <p class="title">Cliquez sur un badge pour ouvrir le PDF officiel (Preuves de mes acquis)</p>
+                    
+                    <div class="grid-3-cols">
+                        
+                        <!-- Certif 1: Cisco Packet Tracer -->
+                        <div class="nes-container is-dark is-centered project-item">
+                            <a href="#" onclick="openModal('intro_packet.pdf', 'Certification Cisco Packet Tracer'); return false;" title="Voir la certification Introduction à Packet Tracer">
+                                <div class="certif-icon-container">
+                                    <i class="nes-icon star is-large"></i>
+                                </div>
+                            </a>
+                            <p style="font-size: 10px; color: var(--primary-highlight); margin-top: 10px;">Packet Tracer</p>
+                            <p style="font-size: 8px;">Réseau & Simulation</p>
+                        </div>
+                        
+                        <!-- Certif 2: CNIL Module 1 -->
+                        <div class="nes-container is-dark is-centered project-item">
+                            <a href="#" onclick="openModal('cnil1.pdf', 'Certification CNIL - Module 1'); return false;" title="Voir la certification CNIL Module 1">
+                                <div class="certif-icon-container" style="border-color: #2ED573;">
+                                    <i class="nes-icon trophy is-large" style="color: #2ED573;"></i>
+                                </div>
+                            </a>
+                            <p style="font-size: 10px; color: var(--primary-highlight); margin-top: 10px;">CNIL Module 1</p>
+                            <p style="font-size: 8px;">Bases RGPD & Droit</p>
+                        </div>
+
+                        <!-- Certif 3: CNIL Module 2 -->
+                        <div class="nes-container is-dark is-centered project-item">
+                            <a href="#" onclick="openModal('cnil2.pdf', 'Certification CNIL - Module 2'); return false;" title="Voir la certification CNIL Module 2">
+                                <div class="certif-icon-container" style="border-color: #2ED573;">
+                                    <i class="nes-icon trophy is-large" style="color: #2ED573;"></i>
+                                </div>
+                            </a>
+                            <p style="font-size: 10px; color: var(--primary-highlight); margin-top: 10px;">CNIL Module 2</p>
+                            <p style="font-size: 8px;">Sécurité & Données</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nes-container is-portfolio-box">
+                    <p class="title">Ce que ça prouve :</p>
+                    <p>Je ne suis pas seulement technique ; je suis conscient des enjeux légaux et de sécurité. Un bon administrateur doit être irréprochable sur le droit et la protection des données !</p>
+                </div>
+            </section>
+
+
+            <!-- 2.6. Section Veille Technologique (Conservé tel quel) -->
+            <section id="veille">
+                <h2>Veille Technologique</h2>
+                <div class="nes-container is-portfolio-box">
+                    <p class="title">🇫🇷 Veille Technologique : L'évolution du Mobile (1G à 5G)</p>
+
+                    <h3>1. Synthèse Historique : Les Générations Mobiles en France</h3>
+                    <p>Ce tableau sert de base factuelle, résumant les grandes étapes sur le territoire français. </p>
+                    
+                    <!-- Tableau 1: Historique -->
+                    <div class="nes-table-responsive" style="margin-top: 20px;">
+                        <table class="nes-table is-bordered is-dark" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Génération</th>
+                                    <th>Technologie Dominante</th>
+                                    <th>Rupture Majeure et Contexte Français</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1G</td>
+                                    <td>Analogique</td>
+                                    <td>Débuts de la téléphonie mobile (Radiocom 2000). Communication vocale de base.</td>
+                                </tr>
+                                <tr>
+                                    <td>2G</td>
+                                    <td>GSM</td>
+                                    <td>Numérisation de la voix et invention du SMS. Déploiement par Itinéris et SFR.</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>3G</td>
+                                    <td>UMTS</td>
+                                    <td>Début de l'Internet mobile et des premiers services multimédias.</td>
+                                </tr>
+                                <tr>
+                                    <td>4G</td>
+                                    <td>LTE</td>
+                                    <td>Haut débit mobile permettant le streaming vidéo HD. Accélération du déploiement suite à l'arrivée de Free Mobile en 2012.</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>5G</td>
+                                    <td>eMBB / uRLLC</td>
+                                    <td>Ultra-faible latence et support massif de l'IoT. Déploiement autour de la bande 3.5 GHz.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 style="margin-top: 30px;">2. Définitions Clés de la 5G</h3>
+                    <p>Pour la 5G, il est essentiel de maîtriser les trois axes de service et la distinction technique du cœur de réseau.</p>
+
+                    <!-- Tableau 2: Définitions 5G -->
+                    <div class="nes-table-responsive" style="margin-top: 20px;">
+                        <table class="nes-table is-bordered is-dark" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Acronyme</th>
+                                    <th>Définition Complète</th>
+                                    <th>Conséquence Pratique</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>eMBB</td>
+                                    <td>enhanced Mobile BroadBand</td>
+                                    <td>Haut débit massif : permet le streaming 4K et la réalité virtuelle/augmentée.</td>
+                                </tr>
+                                <tr>
+                                    <td>uRLLC</td>
+                                    <td>ultra-Reliable Low-Latency Communications</td>
+                                    <td>Latence ultra-faible (quelques millisecondes) : indispensable pour la robotique et les services critiques.</td>
+                                </tr>
+                                <tr>
+                                    <td>mMTC</td>
+                                    <td>massive Machine Type Communications</td>
+                                    <td>Capacité à connecter un nombre très important de capteurs (IoT) au kilomètre carré.</td>
+                                </tr>
+                                <tr>
+                                    <td>5G SA</td>
+                                    <td>Standalone (Cœur natif)</td>
+                                    <td>La "vraie" 5G. Permet les fonctionnalités avancées comme le Network Slicing (découpage du réseau sur mesure).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">3. Acteurs Clés du Marché Français</h3>
+                    
+                    <!-- Tableau 3: Acteurs Clés -->
+                    <div class="nes-table-responsive" style="margin-top: 20px;">
+                        <table class="nes-table is-bordered is-dark" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Acteur</th>
+                                    <th>Rôle Principal</th>
+                                    <th>Rôle dans le Déploiement 5G</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>L'ARCEP</td>
+                                    <td>Régulateur et "Gendarme des Télécoms".</td>
+                                    <td>Attribution et contrôle des fréquences (ex: 3.5 GHz) et vérification des obligations de couverture des opérateurs.</td>
+                                </tr>
+                                <tr>
+                                    <td>Les Opérateurs (MNOs)</td>
+                                    <td>Orange, SFR, Bouygues Telecom, Free Mobile</td>
+                                    <td>Investissement, construction et exploitation du réseau (antennes, fibre optique, cœur de réseau).</td>
+                                </tr>
+                                <tr>
+                                    <td>Les Équipementiers</td>
+                                    <td>Ericsson, Nokia, Huawei (France)</td>
+                                    <td>Fourniture des équipements technologiques (antennes Massive MIMO, logiciels) aux opérateurs.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">4. Actualités de Veille Sourcées (Septembre à Décembre 2025)</h3>
+                    
+                    <!-- Tableau 4: Actualités Sourcées -->
+                    <div class="nes-table-responsive" style="margin-top: 20px;">
+                        <table class="nes-table is-bordered is-dark" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Mois</th>
+                                    <th>Thème Principal de l'Actualité</th>
+                                    <th>Signification pour le Marché Français</th>
+                                    <th>Source à Citer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sept. 2025</td>
+                                    <td>Extension des Fréquences pour les Réseaux Privés</td>
+                                    <td>L'ARCEP a élargi les bandes pour les entreprises. Cela confirme la priorité donnée à l'usage industriel de la 5G (uRLLC) dans les usines et les plateformes logistiques.</td>
+                                    <td>ARCEP (Décisions sur les "fréquences locales" 3.8-4.2 GHz)</td>
+                                </tr>
+                                <tr>
+                                    <td>Oct. 2025</td>
+                                    <td>Accélération de la Recherche Européenne sur la 6G</td>
+                                    <td>Les organismes européens (comme l'ETSI, basé à Sophia Antipolis) ont lancé de nouveaux groupes de travail pour intégrer l'Intelligence Artificielle et de nouvelles technologies (fréquences Térahertz) dans la future norme 6G.</td>
+                                    <td>ETSI (Communiqués de presse / Publications)</td>
+                                </tr>
+                                <tr>
+                                    <td>Nov. 2025</td>
+                                    <td>Bilan de la Couverture 5G en Bande 3.5 GHz</td>
+                                    <td>Publication de l'Observatoire des marchés de l'ARCEP (T3 2025) confirmant si les opérateurs ont atteint les objectifs de déploiement de sites 5G rapides (engagement national des 10 500 sites).</td>
+                                    <td>ARCEP (Observatoire des Marchés T3 2025)</td>
+                                </tr>
+                                <tr>
+                                    <td>Déc. 2025</td>
+                                    <td>Progression du Déploiement de la 5G SA</td>
+                                    <td>Les opérateurs annoncent de nouvelles phases dans l'activation du cœur de réseau 5G Standalone. Cela permet concrètement le Network Slicing (réseaux sur mesure) et les services à très faible latence.</td>
+                                    <td>Opérateurs Français (Communiqués de presse techniques)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">5. Événements et Salons Accessibles (Conseils BTS)</h3>
+                    <p>Pour compléter votre veille de manière proactive, voici des événements et sources à suivre :</p>
+                    <ul class="nes-list is-circle">
+                        <li>Mobile World Congress (MWC) : Bien que l'événement soit à Barcelone, ses synthèses et conférences en ligne sont une source d'information majeure pour les annonces 5G/6G.</li>
+                        <li>VivaTech (Paris) : Ce salon présente les applications concrètes de la 5G (robotique, IoT) par les opérateurs et les start-ups françaises.</li>
+                        <li>Webinaires ARCEP ou ANFR : Souvent gratuits, ces événements en ligne présentent les derniers rapports et les évolutions réglementaires, une source d'information très fiable et accessible.</li>
+                    </ul>
+                    <p style="text-align: right; font-size: 0.8em; margin-top: 20px;">Source des spécifications techniques : 3GPP (International)</p>
+
+                </div>
+            </section>
+
+            <!-- 3. Footer -->
+            <footer class="footer-style">
+                <p>&copy; 2024 Portfolio BTS SIO. Conçu avec NES.css. Mode Rétro Activé</p>
+            </footer>
+
+        </div>
+    </div>
+    
+    <!-- 4. MODAL / LIGHTBOX POUR L'AFFICHAGE DES CERTIFICATS -->
+    <div id="certifModal" class="modal-overlay">
+        <div class="modal-content nes-container is-dark with-title">
+            <!-- Le titre sera mis à jour par le JavaScript -->
+            <p class="title" id="modalTitle">Visualisation du Certificat</p> 
+            <button class="nes-btn is-error close-btn" onclick="closeModal()">X Fermer</button>
+            <!-- L'iframe chargera le PDF -->
+            <iframe id="certifIframe" src="" frameborder="0"></iframe>
+        </div>
+    </div>
+
+
+    <!-- 5. Script JavaScript intégré pour la navigation et la modale -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuItems = document.querySelectorAll('.side-menu .menu-item');
+            const sections = document.querySelectorAll('.main-content section');
+            const portfolioContainer = document.querySelector('.portfolio-container');
+            
+            // Éléments de la Modale
+            const certifModal = document.getElementById('certifModal');
+            const certifIframe = document.getElementById('certifIframe');
+            const modalTitleElement = document.getElementById('modalTitle');
+
+
+            // --- Fonctions de la Modale (Globales pour être appelées par onclick) ---
+
+            /**
+             * Ouvre la modale pour afficher le PDF du certificat.
+             * @param {string} pdfUrl - Le chemin du fichier PDF.
+             * @param {string} title - Le titre à afficher dans la modale.
+             */
+            window.openModal = function(pdfUrl, title) {
+                modalTitleElement.textContent = title; // Met à jour le titre
+                certifIframe.src = pdfUrl; // Charge l'URL du PDF dans l'iframe
+                certifModal.classList.add('active'); // Rend la modale visible
+                document.body.style.overflow = 'hidden'; // Empêche le défilement du corps
+            }
+
+            /**
+             * Ferme la modale.
+             */
+            window.closeModal = function() {
+                certifModal.classList.remove('active'); // Cache la modale
+                // Petite pause pour la transition avant d'effacer le contenu
+                setTimeout(() => {
+                    certifIframe.src = ''; 
+                    document.body.style.overflow = ''; 
+                }, 300);
+            }
+
+            // Fermer la modale en cliquant en dehors (sur l'overlay)
+            certifModal.addEventListener('click', (e) => {
+                if (e.target === certifModal) {
+                    closeModal();
+                }
+            });
+
+            // Fermer la modale avec la touche Échap
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && certifModal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+
+            // --- Fonctions de Navigation (Ancien script) ---
+
+            /**
+             * Gère l'affichage de la section ciblée avec l'effet de flash/transition.
+             * @param {string} targetId - L'ID de la section à afficher.
+             */
+            const showSection = (targetId) => {
+                const targetSection = document.getElementById(targetId);
+                if (!targetSection) return;
+
+                // 1. Applique l'effet flash (CSS: quickFlash)
+                portfolioContainer.classList.add('is-flashing');
+                
+                // 2. Attend la fin du flash pour effectuer le changement (100ms)
+                setTimeout(() => {
+                    // Supprime la classe active de toutes les sections et liens
+                    sections.forEach(s => s.classList.remove('active'));
+                    menuItems.forEach(a => a.classList.remove('active'));
+
+                    // Ajoute la classe active à la nouvelle section et au lien correspondant
+                    targetSection.classList.add('active');
+                    const targetLink = document.querySelector(`.side-menu .menu-item[data-section="${targetId}"]`);
+                    if (targetLink) {
+                        targetLink.classList.add('active');
+                    }
+                    
+                    // 3. Supprime l'effet flash
+                    portfolioContainer.classList.remove('is-flashing');
+
+                    // 4. Faire défiler en haut du contenu sur mobile
+                    if (window.innerWidth <= 900) {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                    
+                }, 100); 
+            };
+
+
+            // Mettre en place les écouteurs d'événements pour les éléments de menu
+            menuItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    const targetSectionId = item.getAttribute('data-section');
+                    
+                    if (targetSectionId) {
+                        showSection(targetSectionId);
+                    }
+                });
+            });
+
+            // Chargement initial: afficher la section active par défaut ('accueil')
+            const initialActiveItem = document.querySelector('.side-menu .menu-item.active');
+            if (initialActiveItem) {
+                const initialSectionId = initialActiveItem.getAttribute('data-section');
+                showSection(initialSectionId);
+            }
+        });
+    </script>
+</body>
+</html>
