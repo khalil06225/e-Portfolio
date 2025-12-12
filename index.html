@@ -248,6 +248,23 @@
             color: #FFD700; /* Jaune or pour l'alerte */
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
         }
+        
+        /* Style du lien de téléchargement direct pour le tableau de synthèse */
+        .direct-download-link {
+             cursor: pointer;
+             transition: all 0.2s;
+             border-color: var(--secondary-highlight) !important;
+             display: block; /* Important pour centrer l'icône */
+        }
+        .direct-download-link:hover .nes-container {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px var(--primary-highlight) !important;
+        }
+        .direct-download-link i {
+            font-size: 6rem;
+            color: #FFFFFF;
+        }
+
 
         /* Grille pour les projets/compétences */
         .grid-3-cols {
@@ -398,7 +415,7 @@
         }
         
         /* ========================================================= */
-        /* 5. MODAL / LIGHTBOX POUR CERTIFICATS (NOUVEAU)            */
+        /* 5. MODAL / LIGHTBOX POUR CERTIFICATS                      */
         /* ========================================================= */
 
         .modal-overlay {
@@ -440,14 +457,16 @@
             text-shadow: none;
             box-shadow: none;
         }
+        /* Style pour le contenu affiché dans la modale (PDF) */
         #certifIframe {
             width: 100%;
             /* Ajuste la hauteur en fonction de l'espace titre/bouton */
-            height: calc(100% - 70px); 
+            height: calc(100% - 50px); 
             border: 3px solid var(--secondary-highlight);
             background-color: white; /* Fond blanc pour le PDF */
             display: block;
         }
+        
         .close-btn {
             position: absolute;
             top: 25px;
@@ -588,22 +607,32 @@
                 </div>
             </section>
 
-            <!-- 2.3. Section Compétences (Conservé tel quel) -->
+            <!-- 2.3. Section Compétences (RETOUR AU TÉLÉCHARGEMENT DIRECT POUR ODS) -->
             <section id="competences">
                 <h2>Compétences et Expertise</h2>
                 
-                <!-- BLOC : Tableau de Synthèse (Lien Externe) -->
+                <!-- BLOC : Tableau de Synthèse (TÉLÉCHARGEMENT DIRECT RESTAURÉ) -->
                 <div class="synthesis-button-container">
-                    <p>Mon Tableau de Synthèse est la preuve formelle de mon travail. Téléchargez le PDF pour les détails complets.</p>
+                    <p>Mon Tableau de Synthèse est la preuve formelle de mon travail. Cliquez sur l'icône ci-dessous pour le télécharger directement.</p>
                     
+                    <!-- LIEN DE TÉLÉCHARGEMENT DIRECT -->
                     <a 
-                        href="tableau_de_synthese.pdf" 
-                        target="_blank" 
-                        class="nes-btn is-primary" 
-                        style="text-decoration: none;"
+                        href="synthese.ods" 
+                        download="synthese.ods"
+                        class="direct-download-link"
+                        style="max-width: 250px; margin: 20px auto; text-decoration: none;"
+                        title="Cliquez pour télécharger le Tableau de Synthèse au format ODS"
                     >
-                        💾 Ouvrir le Tableau de Synthèse (PDF)
+                        <div 
+                            class="nes-container is-dark is-centered" 
+                            style="padding: 30px; border-color: var(--primary-highlight) !important;"
+                        >
+                            <i class="nes-icon file is-large" style="color: #FFD700;"></i>
+                            <p style="font-size: 10px; color: #FFD700; margin-top: 10px;">synthese.ods</p>
+                            <p style="font-size: 8px; color: var(--main-text-color);">Cliquez pour télécharger</p>
+                        </div>
                     </a>
+                    <!-- FIN LIEN TÉLÉCHARGEMENT DIRECT -->
                 </div>
                 
                 <!-- Compétences Détaillées (Accordéons) -->
@@ -676,7 +705,7 @@
                 </div>
             </section>
             
-            <!-- 2.5. Section Certifications (Conservé tel quel) -->
+            <!-- 2.5. Section Certifications (Utilise toujours la modale PDF) -->
             <section id="certif">
                 <h2>Certifications Officielles Obtenues</h2>
                 
@@ -687,7 +716,7 @@
                         
                         <!-- Certif 1: Cisco Packet Tracer -->
                         <div class="nes-container is-dark is-centered project-item">
-                            <a href="#" onclick="openModal('intro_packet.pdf', 'Certification Cisco Packet Tracer'); return false;" title="Voir la certification Introduction à Packet Tracer">
+                            <a href="#" onclick="openPdfModal('intro_packet.pdf', 'Certification Cisco Packet Tracer'); return false;" title="Voir la certification Introduction à Packet Tracer">
                                 <div class="certif-icon-container">
                                     <i class="nes-icon star is-large"></i>
                                 </div>
@@ -698,7 +727,7 @@
                         
                         <!-- Certif 2: CNIL Module 1 -->
                         <div class="nes-container is-dark is-centered project-item">
-                            <a href="#" onclick="openModal('cnil1.pdf', 'Certification CNIL - Module 1'); return false;" title="Voir la certification CNIL Module 1">
+                            <a href="#" onclick="openPdfModal('cnil1.pdf', 'Certification CNIL - Module 1'); return false;" title="Voir la certification CNIL Module 1">
                                 <div class="certif-icon-container" style="border-color: #2ED573;">
                                     <i class="nes-icon trophy is-large" style="color: #2ED573;"></i>
                                 </div>
@@ -709,7 +738,7 @@
 
                         <!-- Certif 3: CNIL Module 2 -->
                         <div class="nes-container is-dark is-centered project-item">
-                            <a href="#" onclick="openModal('cnil2.pdf', 'Certification CNIL - Module 2'); return false;" title="Voir la certification CNIL Module 2">
+                            <a href="#" onclick="openPdfModal('cnil2.pdf', 'Certification CNIL - Module 2'); return false;" title="Voir la certification CNIL Module 2">
                                 <div class="certif-icon-container" style="border-color: #2ED573;">
                                     <i class="nes-icon trophy is-large" style="color: #2ED573;"></i>
                                 </div>
@@ -910,14 +939,16 @@
         </div>
     </div>
     
-    <!-- 4. MODAL / LIGHTBOX POUR L'AFFICHAGE DES CERTIFICATS -->
+    <!-- 4. MODAL / LIGHTBOX POUR L'AFFICHAGE DES DOCUMENTS (Conservée pour les PDF) -->
     <div id="certifModal" class="modal-overlay">
         <div class="modal-content nes-container is-dark with-title">
             <!-- Le titre sera mis à jour par le JavaScript -->
-            <p class="title" id="modalTitle">Visualisation du Certificat</p> 
+            <p class="title" id="modalTitle">Visualisation du Document</p> 
             <button class="nes-btn is-error close-btn" onclick="closeModal()">X Fermer</button>
-            <!-- L'iframe chargera le PDF -->
+            
+            <!-- Conteneur pour PDF (via iframe) -->
             <iframe id="certifIframe" src="" frameborder="0"></iframe>
+
         </div>
     </div>
 
@@ -938,18 +969,6 @@
             // --- Fonctions de la Modale (Globales pour être appelées par onclick) ---
 
             /**
-             * Ouvre la modale pour afficher le PDF du certificat.
-             * @param {string} pdfUrl - Le chemin du fichier PDF.
-             * @param {string} title - Le titre à afficher dans la modale.
-             */
-            window.openModal = function(pdfUrl, title) {
-                modalTitleElement.textContent = title; // Met à jour le titre
-                certifIframe.src = pdfUrl; // Charge l'URL du PDF dans l'iframe
-                certifModal.classList.add('active'); // Rend la modale visible
-                document.body.style.overflow = 'hidden'; // Empêche le défilement du corps
-            }
-
-            /**
              * Ferme la modale.
              */
             window.closeModal = function() {
@@ -957,9 +976,22 @@
                 // Petite pause pour la transition avant d'effacer le contenu
                 setTimeout(() => {
                     certifIframe.src = ''; 
-                    document.body.style.overflow = ''; 
+                    document.body.style.overflow = ''; // Rétablir le défilement
                 }, 300);
             }
+            
+            /**
+             * Ouvre la modale pour afficher le PDF du certificat.
+             * @param {string} pdfUrl - Le chemin du fichier PDF.
+             * @param {string} title - Le titre à afficher dans la modale.
+             */
+            window.openPdfModal = function(pdfUrl, title) {
+                modalTitleElement.textContent = title; // Met à jour le titre
+                certifIframe.src = pdfUrl; // Charge l'URL du PDF dans l'iframe
+                certifModal.classList.add('active'); // Rend la modale visible
+                document.body.style.overflow = 'hidden'; // Empêche le défilement du corps
+            }
+
 
             // Fermer la modale en cliquant en dehors (sur l'overlay)
             certifModal.addEventListener('click', (e) => {
