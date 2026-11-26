@@ -114,7 +114,7 @@
         }
 
         /* ========================================================= */
-        /* 2. BARRE DE NAVIGATION LATERALE (Side Menu)               */
+        /* 2. BARRE DE NAVIGATION LATERALE (Side Menu)               */
         /* ========================================================= */
 
         /* Layout Desktop (min-width: 901px) */
@@ -174,7 +174,7 @@
         }
 
         /* ========================================================= */
-        /* 3. CONTENU PRINCIPAL & STRUCTURE                          */
+        /* 3. CONTENU PRINCIPAL & STRUCTURE                          */
         /* ========================================================= */
         
         .main-content {
@@ -402,7 +402,7 @@
         }
 
         /* ========================================================= */
-        /* 4. FOOTER                                                 */
+        /* 4. FOOTER                                                 */
         /* ========================================================= */
 
         .footer-style {
@@ -415,7 +415,7 @@
         }
         
         /* ========================================================= */
-        /* 5. MODAL / LIGHTBOX POUR CERTIFICATS                      */
+        /* 5. MODAL / LIGHTBOX POUR CERTIFICATS                      */
         /* ========================================================= */
 
         .modal-overlay {
@@ -478,7 +478,7 @@
 
 
         /* ========================================================= */
-        /* 6. ADAPTATION MOBILE (max-width: 900px)                            */
+        /* 6. ADAPTATION MOBILE (max-width: 900px)                   */
         /* ========================================================= */
 
         @media (max-width: 900px) { 
@@ -592,6 +592,13 @@
                     <p class="mt-2">J’aime apprendre par moi-même, expérimenter et chercher des solutions. L’informatique n’est pas juste un domaine d’étude pour moi, c’est vraiment quelque chose qui me motive au quotidien.</p>
                     
                     <p class="mt-2">Je suis curieux, investi, et j’essaie toujours de développer mes compétences pour progresser et construire un parcours professionnel qui me ressemble.</p>
+
+                    <!-- Ajout du bouton CV dans la section Présentation -->
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button type="button" class="nes-btn is-primary" onclick="openPdfModal('cv.pdf', 'Curriculum Vitae - Zidi Khalil')">
+                            📄 Consulter mon CV (PDF)
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- BLOC : Parcours Scolaire Factuel -->
@@ -654,19 +661,19 @@
                         <summary>🛠️ Infrastructure, Système & Réseau (Mon Core SISR)</summary>
                         <p>C'est là que je me sens le plus à l'aise. Installer, configurer, sécuriser : c'est mon terrain de jeu.</p>
                         <ul>
-                            <li>Administration OS & Active Directory : Maîtrise des environnements Windows Server (gestion de domaine Active Directory, utilisateurs, groupes, GPO) et Linux.</li>
+                            <li>Administration OS & Active Directory : Maîtrise des environnements Windows Server (administration Active Directory, gestion des utilisateurs, groupes et GPO) et Linux (commandes de base, gestion des utilisateurs).</li>
                             <li>Réseau : Compréhension des modèles OSI/TCP, sous-réseautage, et configuration de base sur Cisco Packet Tracer.</li>
-                            <li>Virtualisation : Maîtrise de Proxmox VE (installation d'hyperviseur, déploiement et gestion de machines virtuelles) et utilisation de VirtualBox.</li>
+                            <li>Virtualisation : Maîtrise de Proxmox VE (installation de l'hyperviseur, création, configuration et gestion de machines virtuelles) et utilisation de VirtualBox pour simuler des réseaux d'entreprise.</li>
                             <li>Sécurité : Mise en place de règles de firewall simples (ACL), gestion des droits d'accès.</li>
                         </ul>
                     </details>
 
                     <details>
                         <summary>🎫 Gestion de Parc & Support Informatique (ITSM)</summary>
-                        <p>Capable de déployer et gérer des outils de suivi pour assurer le maintien en condition opérationnelle d'un parc informatique.</p>
+                        <p>Capable de déployer et d'exploiter des solutions de gestion de parc et de suivi d'incidents pour assurer le support utilisateur.</p>
                         <ul>
-                            <li>GLPI : Installation complète, configuration, gestion de l'inventaire et manipulation quotidienne pour le traitement des tickets d'incidents.</li>
-                            <li>Support utilisateur : Diagnostic, résolution d'incidents et accompagnement technique.</li>
+                            <li>GLPI : Installation complète, configuration, gestion de l'inventaire matériel/logiciel et manipulation quotidienne pour le traitement des tickets.</li>
+                            <li>Support technique : Diagnostic des pannes, assistance aux utilisateurs et résolution d'incidents.</li>
                         </ul>
                     </details>
 
@@ -680,6 +687,7 @@
                         </ul>
                     </details>
                 </div>
+            </section>
 
             <!-- 2.4. Section Projets (Conservé tel quel) -->
             <section id="projets">
